@@ -103,6 +103,24 @@ function createThumbnail(data)
     gallery.insertBefore(img, gallery.firstChild);
 }
 
+function generate() {
+  if (frames.length <= 0) {
+    console.log("no frames to generate gif from.");
+    return;
+  }
+  else {
+    $.ajax({
+        url: "http://localhost:3000/gif",
+        type: 'post',
+        dataType: 'json',
+        data: {frameBuffer : frames},
+        success: function(data) {
+          console.log(data);
+        }
+    });
+  }
+}
+
 function init(el) {
   if (!navigator.getMedia) {
     document.getElementById('errorMessage').innerHTML = 'Sorry. <code>navigator.getUserMedia()</code> is not available.';
