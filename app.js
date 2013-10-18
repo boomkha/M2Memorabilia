@@ -5,7 +5,7 @@
 
 var express = require('express');
 var routes = require('./routes');
-var user = require('./routes/user');
+var upload = require('./routes/upload');
 var http = require('http');
 var path = require('path');
 
@@ -22,6 +22,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(require('less-middleware')({ src: __dirname + '/public' }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(__dirname + '/public/uploads'));
 
 // development only
 if ('development' == app.get('env')) {
@@ -29,7 +30,8 @@ if ('development' == app.get('env')) {
 }
 
 app.get('/', routes.index);
-app.get('/users', user.list);
+app.get('/upload', upload.view);
+app.post('/upload', upload.upload);
 
 http.createServer(app).listen(app.get('port'), function(){
   console.log('Express server listening on port ' + app.get('port'));
