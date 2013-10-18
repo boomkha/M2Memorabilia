@@ -1,5 +1,39 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
+  .container#main
+    .row.row-offcanvas.row-offcanvas-right
+      .col-xs-12.col-sm-9
+        .jumbotron
+          h1 Picture area
+          p
+            | This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+      // /span
+      #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+        .well.sidebar-nav
+          ul.nav
+            li Images Area
+            li.active
+              a(href='#') Link
+            li
+              a(href='#') Link
+            li
+              a(href='#') Link
+            li
+              a(href='#') Link
+            li
+              a(href='#') Link
+            li
+              a(href='#') Link
+            li
+              a(href='#') Link
+            li
+              a(href='#') Link
+        // /.well
+      // /span
+    // /row
+    hr
+    footer
+      p &copy; Company 2013
+  // /.container
+  //
