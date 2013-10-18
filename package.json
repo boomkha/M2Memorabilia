@@ -9,6 +9,7 @@
     "express": "3.3.5",
     "jade": "*",
     "less-middleware": "*",
-    "mongoose": "~3.6.20"
+    "mongoose": "~3.6.20",
+    "imagemagick": "~0.1.3"
   }
 }
