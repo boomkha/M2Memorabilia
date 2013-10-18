@@ -15,8 +15,6 @@ var app = express();
 app.set('port', process.env.PORT || 3000);
 app.set('views', __dirname + '/views');
 app.set('view engine', 'jade');
-//the upload directory for the images
-app.set('upload_dir', './public/uploads/');
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
@@ -24,6 +22,7 @@ app.use(express.methodOverride());
 app.use(app.router);
 app.use(require('less-middleware')({ src: __dirname + '/public' }));
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/uploads', express.static(__dirname + '/public/uploads'));
 
 // development only
 if ('development' == app.get('env')) {
