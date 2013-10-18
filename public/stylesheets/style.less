@@ -4,9 +4,31 @@
 // }
 
 #main {
-	margin-top: 70px !important;
+    margin-top: 70px !important;
 }
 
 a {
   color: #00B7FF;
+}
+
+.jumbotron {
+    padding-top: 30px !important;
+    padding-bottom: 30px !important;
+    line-height: 1 !important;
+}
+
+#gallery img {
+    opacity: 0.6;
+    -webkit-transition: all 0.3s ease-in-out 0s;
+    -moz-transition: all 0.3s ease-in-out 0s;
+    transition: all 0.3s ease-in-out 0s;
+}
+
+#gallery img:hover {
+    cursor: pointer;
+    opacity: 1;
+}
+
+#gallery img.selected {
+    opacity: 1;
 }

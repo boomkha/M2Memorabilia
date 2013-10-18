@@ -1,6 +1,8 @@
 navigator.getMedia = navigator.webkitGetUserMedia || navigator.getUserMedia;
 window.URL = window.URL || window.webkitURL;
 
+var frames = new Array();
+
 // var app = document.getElementById('app');
 var video = document.getElementById('monitor');
 var canvas = document.getElementById('photo');
@@ -75,11 +77,30 @@ function capture() {
     });
 }
 
+function toggleSelect(e) {
+    var img = document.getElementById(e.target.id);
+    console.log(img);
+    if ($(img).hasClass('selected'))
+    {
+        $(img).removeClass('selected');
+        frames.remove(img.id);
+        console.log(frames);
+    }
+    else
+    {
+        $(img).addClass('selected');
+        frames.push(img.id);
+        console.log(frames);
+    }
+}
+
 function createThumbnail(data)
 {
     var img = document.createElement('img');
     img.src = '../uploads/' + data.thumbnail;
-    gallery.appendChild(img);
+    img.id  = data.thumbnail;
+    img.addEventListener("click", toggleSelect, false);
+    gallery.insertBefore(img, gallery.firstChild);
 }
 
 function init(el) {

@@ -3,22 +3,16 @@ extends layout
 block content
   .container#main
     .row.row-offcanvas.row-offcanvas-right
-      .col-xs-12.col-sm-9
-        .jumbotron
-          //h1 Picture area
+      .col-xs-12
+        p(id="errorMessage")
+          | Click to begin
+        .jumbotron(style="text-align: center;")
           video(id="monitor" autoplay="true")
           canvas(id="photo" width="640" height="480px" style="display:none;")
-          button(onclick="init(this)") Capture
-          p(id="errorMessage")
-            | Click to begin
-      // /span
-      #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
+        button.btn.btn-default(onclick="init(this)" style="width: 100%;") Capture
+      #sidebar.col-xs-12(role='navigation' style="margin-top:30px;")
         .well.sidebar-nav
-          #gallery
-        // /.well
-      // /span
-    // /row
+          #gallery(style="text-align: center;")
+        button.btn.btn-default(onclick="generate(this)" style="width: 100%;") Generate
     include footer
     script(type='text/javascript', src='javascripts/imagecapture.js')
-  // /.container
-  //
