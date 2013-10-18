@@ -5,35 +5,20 @@ block content
     .row.row-offcanvas.row-offcanvas-right
       .col-xs-12.col-sm-9
         .jumbotron
-          h1 Picture area
-          p
-            | This is an example to show the potential of an offcanvas layout pattern in Bootstrap. Try some responsive-range viewport sizes to see it in action.
+          //h1 Picture area
+          video(id="monitor" autoplay="true")
+          canvas(id="photo" width="640" height="480px" style="display:none;")
+          button(onclick="init(this)") Capture
+          p(id="errorMessage")
+            | Click to begin
       // /span
       #sidebar.col-xs-6.col-sm-3.sidebar-offcanvas(role='navigation')
         .well.sidebar-nav
-          ul.nav
-            li Images Area
-            li.active
-              a(href='#') Link
-            li
-              a(href='#') Link
-            li
-              a(href='#') Link
-            li
-              a(href='#') Link
-            li
-              a(href='#') Link
-            li
-              a(href='#') Link
-            li
-              a(href='#') Link
-            li
-              a(href='#') Link
+          #gallery
         // /.well
       // /span
     // /row
-    hr
-    footer
-      p &copy; Company 2013
+    include footer
+    script(type='text/javascript', src='javascripts/imagecapture.js')
   // /.container
   //
