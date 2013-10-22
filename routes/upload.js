@@ -43,11 +43,11 @@ exports.gif = function(req, res) {
 
     var gif_filename = 'gif_' + new Date().getTime() + '.gif';
 
-    im.convert(['-delay', '30', '-loop', '0', __dirname + '/../public/uploads/tmp/img_*.png', __dirname + '/../public/uploads/gifs/' + gif_filename], 
+    im.convert(['-delay', '30', '-loop', '0', __dirname + '/../public/uploads/tmp/img_*.png', __dirname + '/../public/uploads/gifs/' + gif_filename],
     function(err, stdout){
         if (err) throw err;
         console.log('GIF is generated');
-        
+
         //Remove the tmp dir
         rimraf(__dirname + '/../public/uploads/tmp/', function(err){
             if (err) throw new Error("ERROR!!!")
