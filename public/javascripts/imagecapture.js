@@ -79,19 +79,39 @@ function capture() {
 
 function toggleSelect(e) {
     var img = document.getElementById(e.target.id);
-    console.log(img);
+    // console.log(img);
     if ($(img).hasClass('selected'))
     {
         $(img).removeClass('selected');
         frames.remove(img.id);
-        console.log(frames);
+        // console.log(frames);
     }
     else
     {
         $(img).addClass('selected');
         frames.push(img.id);
-        console.log(frames);
+        // console.log(frames);
     }
+}
+
+function selectAll() {
+  $.each($("#gallery img"), function() {
+    if (!$(this).hasClass('selected')) {
+      $(this).addClass('selected');
+    }
+    frames.push($(this).attr('id'));
+  });
+  console.log(frames);
+}
+
+function selectNone() {
+  $.each($("#gallery img"), function() {
+    if ($(this).hasClass('selected')) {
+      $(this).removeClass('selected');
+    }
+    frames.remove($(this).attr('id'));
+  });
+  console.log(frames);
 }
 
 function createThumbnail(data)
@@ -101,6 +121,11 @@ function createThumbnail(data)
     img.id  = data.thumbnail;
     img.addEventListener("click", toggleSelect, false);
     gallery.insertBefore(img, gallery.firstChild);
+    if ($(gallery).height() >= $('#gallery-container').height()) {
+      $("#gallery-container").slimScroll({
+        height: $('#gallery-container').height()
+      });
+    }
 }
 
 function generate() {

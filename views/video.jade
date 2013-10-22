@@ -1,0 +1,10 @@
+extends layout
+
+block video
+  .col-xs-12
+    p(id="errorMessage")
+      | Click to begin
+    .jumbotron(style="text-align: center;")
+      video(id="monitor" autoplay="true")
+      canvas(id="photo" width="640" height="480px" style="display:none;")
+    button.btn.btn-default(onclick="init(this)" style="width: 100%;") Capture

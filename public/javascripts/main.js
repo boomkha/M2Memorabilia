@@ -1,3 +1,3 @@
 $(document).ready(function() {
-  // alert('ready');
+  $("#gallery-container").css('min-height', window.innerHeight - 250);
 });
