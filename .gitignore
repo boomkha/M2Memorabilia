@@ -16,6 +16,9 @@ node_modules
 
 # Ignore uploaded files.
 public/uploads/*.png
+public/uploads/*.jpeg
+public/uploads/*.jpg
+public/uploads/*.gif
 
 # Ignore uploaded files.
 public/uploads/gifs/*.gif
