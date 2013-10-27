@@ -4,7 +4,7 @@ var fs = require('fs'),
 
 var upload_dir = __dirname + '/../public/uploads/',
     upload_tmp = __dirname + '/../public/uploads/tmp/',
-    upload_gifs = __dirname + '/../public/uploads/gifs/';
+    upload_gifs = __dirname + '/../public/gifs/';
 
 exports.upload = function(req, res) {
     var current_timestamp = new Date().getTime();

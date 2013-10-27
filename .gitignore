@@ -15,15 +15,9 @@ npm-debug.log
 node_modules
 
 # Ignore uploaded files.
-public/uploads/*.png
-public/uploads/*.jpeg
-public/uploads/*.jpg
-public/uploads/*.gif
-
-#except the gifs dir
-!public/uploads/gifs/
+public/uploads/*
 
 # Ignore uploaded files.
-public/uploads/gifs/*.gif
+public/gifs/*.gif
 
 .DS_Store
