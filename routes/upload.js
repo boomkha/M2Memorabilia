@@ -1,6 +1,7 @@
 var fs = require('fs'),
     im = require('imagemagick'),
-    rimraf = require('rimraf');
+    rimraf = require('rimraf'),
+    MongoClient = require('mongodb').MongoClient;
 
 var upload_dir = __dirname + '/../public/uploads/',
     upload_tmp = __dirname + '/../public/uploads/tmp/',
@@ -43,7 +44,8 @@ exports.gif = function(req, res) {
         });
     });
 
-    var gif_filename = 'gif_' + new Date().getTime() + '.gif';
+    var gif_timestamp = new Date().getTime();
+    var gif_filename = 'gif_' + gif_timestamp + '.gif';
     var gif_path = upload_gifs + gif_filename;
 
     im.convert(['-delay', '30', '-loop', '0', upload_tmp + 'img_*.png', gif_path],
@@ -63,6 +65,28 @@ exports.gif = function(req, res) {
                 if (err) throw err;
                 
                 console.log('Gif is resized');
+
+                MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db) {
+                    "use strict";
+                    if(err) throw err;
+
+                    var gifs = db.collection("gifs");
+
+                    var gif = {
+                        "filename": gif_filename,
+                        "path": gif_path,
+                        "timestamp": gif_timestamp
+                    }
+
+                    gifs.insert(gif, function (err, result) {
+                        "use strict";
+
+                        if (err) throw err;
+
+                        console.log("New .gif info is stored.");
+                    });
+                });
+
                 res.json({ gif : gif_path });
             });
         });
