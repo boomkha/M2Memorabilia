@@ -63,6 +63,7 @@ exports.gif = function(req, res) {
                 if (err) throw err;
                 
                 console.log('Gif is resized');
+                res.json({ gif : gif_path });
             });
         });
 
