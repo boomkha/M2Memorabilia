@@ -1,7 +1,6 @@
 var UploadHandler = require('./upload'),
 	ContentHandler = require('./content'),
-	GalleryHandler = require('./gallery'),
-	ErrorHandler = require('./error').errorHandler;
+	GalleryHandler = require('./gallery');
 
 module.exports = exports = function(app, db, io) {
 
@@ -15,7 +14,4 @@ module.exports = exports = function(app, db, io) {
 	app.post('/upload', uploadHandler.upload);
 	app.post('/gif', uploadHandler.gif);
 	app.get('/gallery', galleryHandler.gallery);
-
-    // Error handling middleware
-    app.use(ErrorHandler);
 }
