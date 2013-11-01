@@ -95,6 +95,7 @@ function toggleSelect(e) {
 }
 
 function selectAll() {
+  selectNone();
   $.each($("#gallery img"), function() {
     if (!$(this).hasClass('selected')) {
       $(this).addClass('selected');
