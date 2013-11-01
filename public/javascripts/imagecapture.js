@@ -173,11 +173,11 @@ socket.on('progress-action', function(data) {
   console.log(data);
   //update progress bar -- data.progress
   $('.progress-bar').css('width', data.progress + '%');
-  if (data.progress >= 50) {
-    $('.progress-msg').html('halfway there..')
+  if (data.progress >= 75) {
+    $('.progress-msg').html('almost there..');
   }
-  else if (data.progress >= 75) {
-    $('.progress-msg').html('almost there..')
+  else if (data.progress >= 50) {
+    $('.progress-msg').html('halfway there..');
   }
 });
 

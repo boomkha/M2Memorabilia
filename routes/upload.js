@@ -27,6 +27,7 @@ function UploadHandler(db, io) {
                 width:   150
             }, function(err, stdout, stderr){
                 if (err) {
+                    progress_counter = 0;
                     try {
                         console.log(err.stack);
                         throw err;
@@ -65,6 +66,7 @@ function UploadHandler(db, io) {
         im.convert(['-delay', '30', '-loop', '0', upload_tmp + 'img_*.png', gif_path],
         function(err, stdout){
             if (err) {
+                progress_counter = 0;
                 try {
                     console.log(err.stack);
                     throw err;
@@ -72,9 +74,11 @@ function UploadHandler(db, io) {
                     io.sockets.emit('black_panther', { error: '60% of the time ...' });
                 }
             }
-            console.log('GIF is generated');
+            else {
+                progress_counter += 25;
+            }
 
-            progress_counter += 25;
+            console.log('GIF is generated');
 
             console.log(progress_counter+'%');
 
@@ -83,10 +87,9 @@ function UploadHandler(db, io) {
             im.convert([gif_path, '-layers', 'OptimizeTransparency', '+map', gif_path],
             function(err, stdout){
                 if (err) throw err;
+                else progress_counter += 25;
 
                 console.log('Transparency is optimized');
-
-                progress_counter += 25;
 
                 console.log(progress_counter+'%');
 
@@ -96,10 +99,9 @@ function UploadHandler(db, io) {
                 im.convert(['-size', '640x320', gif_path, '-resize', '320x240', gif_path],
                 function(err, stdout){
                     if (err) throw err;
+                    else progress_counter += 25;
 
                     console.log('Gif is resized');
-
-                    progress_counter += 25;
 
                     console.log(progress_counter+'%');
 
@@ -127,10 +129,9 @@ function UploadHandler(db, io) {
             //Remove the tmp dir
             rimraf(upload_tmp, function(err){
                 if (err) throw new Error('ERROR!!!')
+                else progress_counter += 25;
 
                 console.log('tmp dir is deleted');
-
-                progress_counter += 25;
 
                 console.log(progress_counter+'%');
 
