@@ -8,6 +8,8 @@ var express = require('express'),
     upload = require('./routes/upload'),
     gallery = require('./routes/gallery'),
     MongoClient = require('mongodb').MongoClient,
+    config = require('konphyg')(__dirname + '/config');
+    mongodbConfig = config('mongodb');
     http = require('http'),
     path = require('path');
 
@@ -16,7 +18,9 @@ var app = express();
 var server = http.createServer(app),
     io = require('socket.io').listen(server);
 
-MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db) {
+var mongoConnection = mongodbConfig.host + ':' + mongodbConfig.port + '/' + mongodbConfig.database;
+
+MongoClient.connect(mongoConnection, function(err, db) {
     'use strict';
 
     if(err) throw err;

@@ -17,6 +17,9 @@ node_modules
 # Ignore uploaded files.
 public/uploads/*
 
+# Ignore development configs
+config/*.development.json
+
 # Ignore uploaded files.
 public/gifs/*.gif
 
