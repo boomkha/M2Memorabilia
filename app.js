@@ -48,8 +48,5 @@ MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db)
 
     process.on('uncaughtException', function(err) {
         console.error(err.stack);
-        if (typeof(res) !== 'undefined'){
-            return res.render('error');
-        }
     });
 });

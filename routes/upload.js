@@ -26,7 +26,14 @@ function UploadHandler(db, io) {
                 srcData: fs.readFileSync(img_path, 'binary'),
                 width:   150
             }, function(err, stdout, stderr){
-                if (err) throw err
+                if (err) {
+                    try {
+                        console.log(err.stack);
+                        throw err;
+                    } catch (e) {
+                        io.sockets.emit('black_panther', { error: '60% of the time ...' });
+                    }
+                }
                 fs.writeFileSync(thumb_path, stdout, 'binary');
                 res.json({ thumbnail : thumb_filename });
             });
@@ -57,7 +64,14 @@ function UploadHandler(db, io) {
 
         im.convert(['-delay', '30', '-loop', '0', upload_tmp + 'img_*.png', gif_path],
         function(err, stdout){
-            if (err) throw err;
+            if (err) {
+                try {
+                    console.log(err.stack);
+                    throw err;
+                } catch (e) {
+                    io.sockets.emit('black_panther', { error: '60% of the time ...' });
+                }
+            }
             console.log('GIF is generated');
 
             progress_counter += 25;

@@ -174,4 +174,9 @@ socket.on('progress-action', function(data) {
   //update progress bar -- data.progress
   $('.progress-bar').css('width', data.progress + '%');
 
-})
+});
+
+socket.on('black_panther', function(data) {
+  console.log(data);
+  //show something on the screen
+});
