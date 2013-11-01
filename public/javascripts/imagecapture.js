@@ -166,7 +166,7 @@ function init() {
   navigator.getMedia({video: true}, gotStream, noStream);
 }
 
-var socket = io.connect('http://localhost:8000');
+var socket = io.connect(window.location.hostname);
 
 socket.on('progress-action', function(data) {
   console.log(data);

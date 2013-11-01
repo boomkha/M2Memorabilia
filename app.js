@@ -8,12 +8,13 @@ var express = require('express'),
 	upload = require('./routes/upload'),
 	gallery = require('./routes/gallery'),
 	MongoClient = require('mongodb').MongoClient,
-	path = require('path'),
 	http = require('http'),
-	server = http.createServer(app),
-	io = require('socket.io').listen(server);
+	path = require('path');
 
 var app = express();
+
+var server = http.createServer(app),
+	io = require('socket.io').listen(server);
 
 MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db) {
     "use strict";
@@ -39,4 +40,8 @@ MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db)
 
     // Application routes
     routes(app, db, io);
+
+    server.listen(app.get('port'), function(){
+	  console.log('Express server listening on port ' + app.get('port'));
+	});
 });
