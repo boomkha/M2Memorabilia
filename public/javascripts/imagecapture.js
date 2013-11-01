@@ -173,10 +173,17 @@ socket.on('progress-action', function(data) {
   console.log(data);
   //update progress bar -- data.progress
   $('.progress-bar').css('width', data.progress + '%');
-
+  if (data.progress >= 50) {
+    $('.progress-msg').html('halfway there..')
+  }
+  else if (data.progress >= 75) {
+    $('.progress-msg').html('almost there..')
+  }
 });
 
 socket.on('black_panther', function(data) {
-  console.log(data);
-  //show something on the screen
+  $('#progressbar').hide();
+  $('.progress-bar').css('width', '5%');
+  selectNone();
+  alert('Something went wrong while generating the gif, please try again!');
 });
