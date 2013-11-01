@@ -2,9 +2,9 @@
 function GifsDAO(db) {
     "use strict";
 
-    /* 
+    /*
      * If this constructor is called without the "new" operator, "this" points
-     * to the global object. Log a warning and call it correctly. 
+     * to the global object. Log a warning and call it correctly.
      */
     if (false === (this instanceof GifsDAO)) {
         console.log('Warning: GifsDAO constructor called without "new" operator');
@@ -29,16 +29,16 @@ function GifsDAO(db) {
     }
 
     this.getAllGifs = function (callback) {
-    	'use strict';
+        'use strict';
 
-		gifs.find().sort('timestamp', -1).toArray(function(err, items) {
+        gifs.find().sort('timestamp', -1).toArray(function(err, items) {
             'use strict';
             if (err) throw err;
 
             console.log('Found ' + items.length + ' gifs');
 
             callback(err, items);
-        });    	
+        });
     }
 }
 

@@ -1,6 +1,8 @@
 extends layout
 
 block content
+  button.btn.btn-primary.btn-lg(data-toggle='modal', data-target='#cameraModal' onclick="init()") Capture
   include framepool
   include video
+  include stage
   script(type='text/javascript', src='javascripts/imagecapture.js')

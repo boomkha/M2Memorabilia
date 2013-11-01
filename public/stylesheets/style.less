@@ -1,7 +1,6 @@
-// body {
-//   padding: 50px;
-//   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-// }
+body {
+    overflow-y: hidden;
+}
 
 footer {
     position: fixed;
@@ -12,7 +11,7 @@ footer {
 }
 
 #main {
-    margin-top: 70px !important;
+    margin-top: 30px !important;
 }
 
 a {
@@ -39,4 +38,36 @@ a {
 
 #gallery img.selected {
     opacity: 1;
+}
+
+.modal {
+    overflow-y: hidden !important;
+}
+
+.modal-dialog {
+    width: 700px !important;
+}
+
+.modal-content {
+    -moz-border-radius: 3px !important;
+    -webkit-border-radius: 3px !important;
+    border-radius: 3px !important;
+}
+
+#stageModal .modal-dialog {
+    text-align: center;
+}
+
+#stageModal .modal-content {
+    background-color: #d6e6f6;
+}
+
+#stageArea {
+    padding: 100px;
+}
+
+#stageClose {
+    position: absolute;
+    right: 10px;
+    top: 5px;
 }

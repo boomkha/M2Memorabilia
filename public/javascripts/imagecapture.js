@@ -128,6 +128,20 @@ function createThumbnail(data)
     }
 }
 
+function processGif(data) {
+    console.log(data);
+    var img = document.createElement('img');
+    img.src = '../gifs/' + data.gif;
+    img.id  = data.gif;
+
+    $.each($("#stageArea img"), function() {
+      $(this).empty();
+    });
+
+    $('#stageArea').append('<img src="../gifs/' + data.gif + '" />' );
+    $('#stageModal').modal('show');
+}
+
 function generate() {
   if (frames.length <= 0) {
     console.log("no frames to generate gif from.");
@@ -139,19 +153,18 @@ function generate() {
         type: 'post',
         dataType: 'json',
         data: {frameBuffer : frames},
-        success: function(data) {
-          console.log(data);
-        }
+        success: processGif
     });
   }
 }
 
-function init(el) {
+function init() {
   if (!navigator.getMedia) {
     document.getElementById('errorMessage').innerHTML = 'Sorry. <code>navigator.getUserMedia()</code> is not available.';
     return;
   }
+  el = document.getElementById('captureButton');
   el.onclick = capture;
-  el.textContent = 'Snapshot';
+  el.textContent = 'Take snapshot';
   navigator.getMedia({video: true}, gotStream, noStream);
 }

@@ -1,7 +1,9 @@
-.col-xs-12
-  p(id="errorMessage")
-    | Click to begin
-  .jumbotron(style="text-align: center;")
-    video(id="monitor" autoplay="true")
-    canvas(id="photo" width="640" height="480px" style="display:none;")
-  button.btn.btn-default(onclick="init(this)" style="width: 100%;") Capture
+div#cameraModal.modal(tabindex="-1", role="dialog", aria-labelledby="cameraModalLabel", aria-hidden="true")
+  div.modal-dialog
+    div.modal-content
+      div.modal-body
+        video(id="monitor" autoplay="true")
+        canvas(id="photo" width="640" height="480px" style="display:none;")
+        form#cameraModalForm(class='form-inline', role='form' style='margin-top: 10px;' onsubmit="return false;")
+          button#captureButton.btn.btn-default(onclick="init(this)" style="width: 49%; margin-right: 2%;") Take Snapshot
+          button#closeVideoModalButton.btn.btn-default(data-dismiss="modal" style="width: 49%;") Close

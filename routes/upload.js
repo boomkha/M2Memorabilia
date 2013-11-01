@@ -58,17 +58,17 @@ function UploadHandler(db) {
             if (err) throw err;
             console.log('GIF is generated');
 
-            im.convert([gif_path, '-layers', 'OptimizeTransparency', '+map', gif_path], 
+            im.convert([gif_path, '-layers', 'OptimizeTransparency', '+map', gif_path],
             function(err, stdout){
                 if (err) throw err;
 
                 console.log('Transparency is optimized');
 
                 //resizing the gif to save disk space
-                im.convert(['-size', '640x320', gif_path, '-resize', '320x240', gif_path], 
+                im.convert(['-size', '640x320', gif_path, '-resize', '320x240', gif_path],
                 function(err, stdout){
                     if (err) throw err;
-                    
+
                     console.log('Gif is resized');
 
                     var gif = {
@@ -83,7 +83,7 @@ function UploadHandler(db) {
                         if (err) throw err;
                     });
 
-                    res.json({ gif : gif_path });
+                    res.json({ gif : gif_filename });
                 });
             });
 
