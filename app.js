@@ -3,38 +3,42 @@
  * Module dependencies.
  */
 
-var express = require('express');
-var routes = require('./routes');
-var upload = require('./routes/upload');
-var gallery = require('./routes/gallery');
-var http = require('http');
-var path = require('path');
+var express = require('express'),
+	routes = require('./routes'),
+	upload = require('./routes/upload'),
+	gallery = require('./routes/gallery'),
+	MongoClient = require('mongodb').MongoClient,
+	http = require('http'),
+	path = require('path');
 
 var app = express();
 
-// all environments
-app.set('port', process.env.PORT || 3000);
-app.set('views', __dirname + '/views');
-app.set('view engine', 'jade');
-app.use(express.favicon());
-app.use(express.logger('dev'));
-app.use(express.bodyParser());
-app.use(express.methodOverride());
-app.use(app.router);
-app.use(require('less-middleware')({ src: __dirname + '/public' }));
-app.use(express.static(path.join(__dirname, 'public')));
-app.use('/uploads', express.static(__dirname + '/public/uploads'));
+MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db) {
+    "use strict";
+    if(err) throw err;
 
-// development only
-if ('development' == app.get('env')) {
-  app.use(express.errorHandler());
-}
+    app.set('port', process.env.PORT || 3000);
+    app.set('view engine', 'jade');
+    app.set('views', __dirname + '/views');
 
-app.get('/', routes.index);
-app.post('/upload', upload.upload);
-app.post('/gif', upload.gif);
-app.get('/gallery', gallery.gallery);
+    app.use(express.favicon());
+	app.use(express.logger('dev'));
+	app.use(express.bodyParser());
+	app.use(express.methodOverride());
+	app.use(app.router);
+	app.use(require('less-middleware')({ src: __dirname + '/public' }));
+	app.use(express.static(path.join(__dirname, 'public')));
+	app.use('/uploads', express.static(__dirname + '/public/uploads'));
 
-http.createServer(app).listen(app.get('port'), function(){
-  console.log('Express server listening on port ' + app.get('port'));
+	// development only
+	if ('development' == app.get('env')) {
+	  app.use(express.errorHandler());
+	}
+
+    // Application routes
+    routes(app, db);
+
+    http.createServer(app).listen(app.get('port'), function(){
+	  console.log('Express server listening on port ' + app.get('port'));
+	});
 });

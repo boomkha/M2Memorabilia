@@ -1,19 +1,16 @@
-var MongoClient = require('mongodb').MongoClient;
+var GifsDAO = require('../models/gifs').GifsDAO;
 
-exports.gallery = function(req, res) {
-	MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db) {
-	    "use strict";
-	    if(err) throw err;
+function GalleryHandler(db) {
+    'use strict';
 
-	    var gifs = db.collection("gifs");
+    var gifDAO = new GifsDAO(db);
 
-        gifs.find().sort('timestamp', -1).toArray(function(err, items) {
-            "use strict";
-            if (err) throw err;
-
-            console.log("Found " + items.length + " gifs");
-
-            res.json({ gifs : items });
+    this.gallery = function(req, res) {
+        gifDAO.getAllGifs(function(err, items){
+            res.json({ gifs: items });
         });
-	});
-};
+    };
+
+}
+
+module.exports = GalleryHandler;

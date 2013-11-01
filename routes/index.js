@@ -1,8 +1,21 @@
+var UploadHandler = require('./upload'),
+	ContentHandler = require('./content'),
+	GalleryHandler = require('./gallery'),
+	ErrorHandler = require('./error').errorHandler;
 
-/*
- * GET home page.
- */
+module.exports = exports = function(app, db) {
 
-exports.index = function(req, res){
-  res.render('index', { title: 'Express' });
-};
+    var uploadHandler = new UploadHandler(db);
+    var galleryHandler = new GalleryHandler(db);
+    var contentHandler = new ContentHandler(db);
+
+    // The main page of the blog
+    app.get('/', contentHandler.displayMainPage);
+
+	app.post('/upload', uploadHandler.upload);
+	app.post('/gif', uploadHandler.gif);
+	app.get('/gallery', galleryHandler.gallery);
+
+    // Error handling middleware
+    app.use(ErrorHandler);
+}
