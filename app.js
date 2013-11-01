@@ -8,8 +8,10 @@ var express = require('express'),
 	upload = require('./routes/upload'),
 	gallery = require('./routes/gallery'),
 	MongoClient = require('mongodb').MongoClient,
+	path = require('path'),
 	http = require('http'),
-	path = require('path');
+	server = http.createServer(app),
+	io = require('socket.io').listen(server);
 
 var app = express();
 
@@ -36,9 +38,5 @@ MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db)
 	}
 
     // Application routes
-    routes(app, db);
-
-    http.createServer(app).listen(app.get('port'), function(){
-	  console.log('Express server listening on port ' + app.get('port'));
-	});
+    routes(app, db, io);
 });

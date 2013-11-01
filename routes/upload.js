@@ -1,8 +1,7 @@
 var fs = require('fs'),
     im = require('imagemagick'),
     rimraf = require('rimraf'),
-    GifsDAO = require('../models/gifs').GifsDAO,
-    io = require('socket.io').listen(8000);
+    GifsDAO = require('../models/gifs').GifsDAO;
 
 var upload_dir = __dirname + '/../public/uploads/',
     upload_tmp = __dirname + '/../public/uploads/tmp/',
@@ -10,7 +9,7 @@ var upload_dir = __dirname + '/../public/uploads/',
 
 var progress_counter = 0;
 
-function UploadHandler(db) {
+function UploadHandler(db, io) {
     'use strict';
 
     var gifDAO = new GifsDAO(db);
@@ -52,6 +51,7 @@ function UploadHandler(db) {
                     progress_counter += 20;
 
                     io.sockets.on('connection', function (socket) {
+                        console.log(progress_counter);
                         socket.emit('progress-action', { progress: progress_counter });
                     });
                 });
@@ -70,6 +70,7 @@ function UploadHandler(db) {
             progress_counter += 20;
 
             io.sockets.on('connection', function (socket) {
+                console.log(progress_counter);
                 socket.emit('progress-action', { progress: progress_counter });
             });
 
@@ -82,6 +83,7 @@ function UploadHandler(db) {
                 progress_counter += 20;
 
                 io.sockets.on('connection', function (socket) {
+                    console.log(progress_counter);
                     socket.emit('progress-action', { progress: progress_counter });
                 });
 
@@ -95,6 +97,7 @@ function UploadHandler(db) {
                     progress_counter += 20;
 
                     io.sockets.on('connection', function (socket) {
+                        console.log(progress_counter);
                         socket.emit('progress-action', { progress: progress_counter });
                     });
 
@@ -123,6 +126,7 @@ function UploadHandler(db) {
                 progress_counter += 20;
 
                 io.sockets.on('connection', function (socket) {
+                    console.log(progress_counter);
                     socket.emit('progress-action', { progress: progress_counter });
                 });
             });

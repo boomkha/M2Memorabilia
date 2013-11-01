@@ -3,9 +3,9 @@ var UploadHandler = require('./upload'),
 	GalleryHandler = require('./gallery'),
 	ErrorHandler = require('./error').errorHandler;
 
-module.exports = exports = function(app, db) {
+module.exports = exports = function(app, db, io) {
 
-    var uploadHandler = new UploadHandler(db);
+    var uploadHandler = new UploadHandler(db, io);
     var galleryHandler = new GalleryHandler(db);
     var contentHandler = new ContentHandler(db);
 
