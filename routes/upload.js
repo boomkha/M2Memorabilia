@@ -1,11 +1,14 @@
 var fs = require('fs'),
     im = require('imagemagick'),
     rimraf = require('rimraf'),
-    GifsDAO = require('../models/gifs').GifsDAO;
+    GifsDAO = require('../models/gifs').GifsDAO,
+    io = require('socket.io').listen(8000);
 
 var upload_dir = __dirname + '/../public/uploads/',
     upload_tmp = __dirname + '/../public/uploads/tmp/',
     upload_gifs = __dirname + '/../public/gifs/';
+
+var progress_counter = 0;
 
 function UploadHandler(db) {
     'use strict';
@@ -45,6 +48,12 @@ function UploadHandler(db) {
                 if (err) throw err;
                 fs.writeFile(upload_tmp + img_part, data, function (err) {
                     if (err) throw err;
+
+                    progress_counter += 20;
+
+                    io.sockets.on('connection', function (socket) {
+                        socket.emit('progress-action', { progress: progress_counter });
+                    });
                 });
             });
         });
@@ -57,6 +66,12 @@ function UploadHandler(db) {
         function(err, stdout){
             if (err) throw err;
             console.log('GIF is generated');
+            
+            progress_counter += 20;
+
+            io.sockets.on('connection', function (socket) {
+                socket.emit('progress-action', { progress: progress_counter });
+            });
 
             im.convert([gif_path, '-layers', 'OptimizeTransparency', '+map', gif_path],
             function(err, stdout){
@@ -64,12 +79,24 @@ function UploadHandler(db) {
 
                 console.log('Transparency is optimized');
 
+                progress_counter += 20;
+
+                io.sockets.on('connection', function (socket) {
+                    socket.emit('progress-action', { progress: progress_counter });
+                });
+
                 //resizing the gif to save disk space
                 im.convert(['-size', '640x320', gif_path, '-resize', '320x240', gif_path],
                 function(err, stdout){
                     if (err) throw err;
 
                     console.log('Gif is resized');
+
+                    progress_counter += 20;
+
+                    io.sockets.on('connection', function (socket) {
+                        socket.emit('progress-action', { progress: progress_counter });
+                    });
 
                     var gif = {
                         'filename': gif_filename,
@@ -92,6 +119,12 @@ function UploadHandler(db) {
                 if (err) throw new Error('ERROR!!!')
 
                 console.log('tmp dir is deleted');
+
+                progress_counter += 20;
+
+                io.sockets.on('connection', function (socket) {
+                    socket.emit('progress-action', { progress: progress_counter });
+                });
             });
         });
     }
