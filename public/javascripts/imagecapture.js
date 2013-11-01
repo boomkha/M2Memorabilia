@@ -129,13 +129,9 @@ function createThumbnail(data)
 }
 
 function processGif(data) {
-    console.log(data);
-    var img = document.createElement('img');
-    img.src = '../gifs/' + data.gif;
-    img.id  = data.gif;
-
+  $('#progressbar').hide();
     $.each($("#stageArea img"), function() {
-      $(this).empty();
+      $(this).remove();
     });
 
     $('#stageArea').append('<img src="../gifs/' + data.gif + '" />' );
@@ -148,6 +144,7 @@ function generate() {
     return;
   }
   else {
+    $('#progressbar').show();
     $.ajax({
         url: "http://localhost:3000/gif",
         type: 'post',
@@ -168,3 +165,11 @@ function init() {
   el.textContent = 'Take snapshot';
   navigator.getMedia({video: true}, gotStream, noStream);
 }
+
+var socket = io.connect('http://localhost:8000');
+
+socket.on('progress-action', function(data) {
+  console.log(data);
+  //update progress bar -- data.progress
+
+})
