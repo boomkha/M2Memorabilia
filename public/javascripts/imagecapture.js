@@ -130,6 +130,7 @@ function createThumbnail(data)
 
 function processGif(data) {
   $('#progressbar').hide();
+  $('.progress-bar').css('width', '5%');
     $.each($("#stageArea img"), function() {
       $(this).remove();
     });
@@ -171,5 +172,6 @@ var socket = io.connect(window.location.hostname);
 socket.on('progress-action', function(data) {
   console.log(data);
   //update progress bar -- data.progress
+  $('.progress-bar').css('width', data.progress + '%');
 
 })

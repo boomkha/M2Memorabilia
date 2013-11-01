@@ -18,6 +18,7 @@ var server = http.createServer(app),
 
 MongoClient.connect('mongodb://localhost:27017/m2memorabilia', function(err, db) {
     'use strict';
+
     if(err) throw err;
 
     app.set('port', process.env.PORT || 3000);
