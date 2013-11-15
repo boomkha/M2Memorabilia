@@ -137,7 +137,8 @@ function processGif(data) {
     });
 
     $('#stageArea').append('<img src="../gifs/' + data.gif + '" />' );
-    $('#gif-url').val(data.url);
+    $('#stage-gif-url').val(data.url);
+    $('#stage-gif-qr').attr('src', '/qrs/' + data.qr);
     $('#stageModal').modal('show');
 }
 

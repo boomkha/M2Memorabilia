@@ -3,9 +3,13 @@ var fs = require('fs'),
     rimraf = require('rimraf'),
     GifsDAO = require('../models/gifs').GifsDAO;
 
+var Encoder = require('qr').Encoder;
+var encoder = new Encoder;
+
 var upload_dir = __dirname + '/../public/uploads/',
     upload_tmp = __dirname + '/../public/uploads/tmp/',
-    upload_gifs = __dirname + '/../public/gifs/';
+    upload_gifs = __dirname + '/../public/gifs/',
+    upload_qrs = __dirname + '/../public/qrs/';
 
 var progress_counter = 0;
 
@@ -127,13 +131,21 @@ function UploadHandler(db, io, s3) {
                             console.log('Successfully uploaded package.');
 
                             var aws_url = 'https://s3-eu-west-1.amazonaws.com/m2memorabilia/gifs/' + gif_filename;
+                            var qr_img = 'qr_' + gif_timestamp + '.png';
+                            var qr_path = upload_qrs + qr_img;
 
                             var gif = {
                                 'filename': gif_filename,
                                 'path': gif_path,
                                 'url': aws_url,
+                                'qr': qr_path,
                                 'timestamp': gif_timestamp
                             }
+
+                            encoder.on('end', function(){
+                                console.log('QR image generated');
+                            });
+                            encoder.encode(aws_url, qr_path);
 
                             gifDAO.insertEntry(gif, function(err, result) {
                                 'use strict';
@@ -144,7 +156,7 @@ function UploadHandler(db, io, s3) {
                             //invalidating progress_counter
                             progress_counter = 0;
 
-                            res.json({ gif : gif_filename, url: aws_url });
+                            res.json({ gif : gif_filename, url: aws_url , qr: qr_img});
                         });
                     });
                 });

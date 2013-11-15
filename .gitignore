@@ -23,6 +23,9 @@ config/*.development.json
 # Ignore uploaded files.
 public/gifs/*.gif
 
+# Ignore uploaded files.
+public/qrs/*.png
+
 # Ignore development config files.
 config/*.development.json
 
