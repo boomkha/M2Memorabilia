@@ -1,0 +1,7 @@
+ul
+  -for gif in gifs
+    div.gallery_item
+      li
+        img(src='/uploads/' + gif.first_img, width='320', height='240', id=gif._id, onclick='play_pause_gif(this)', class='paused')
+        input(type='hidden', id=gif._id + 'origin', value=gif.first_img)
+        input(type='hidden', id=gif._id + 'gif', value=gif.filename)

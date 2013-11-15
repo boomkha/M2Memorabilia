@@ -7,7 +7,7 @@ function GalleryHandler(db) {
 
     this.gallery = function(req, res) {
         gifDAO.getAllGifs(function(err, items){
-            res.json({ gifs: items });
+            return res.render('gallery', { title: 'M2Memorabilia | GifGallery', gifs: items });
         });
     };
 

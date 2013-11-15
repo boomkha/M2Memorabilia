@@ -52,6 +52,8 @@ function UploadHandler(db, io, s3) {
             console.log('Dir tmp created');
         });
 
+        var first_img = thumbnails[0].split('thumb_')[1];
+
         thumbnails.forEach(function(value){
             var img_part = value.split('thumb_')[1];
 
@@ -139,6 +141,7 @@ function UploadHandler(db, io, s3) {
                                 'path': gif_path,
                                 'url': aws_url,
                                 'qr': qr_path,
+                                'first_img': first_img,
                                 'timestamp': gif_timestamp
                             }
 

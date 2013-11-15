@@ -1,6 +1,6 @@
 var UploadHandler = require('./upload'),
-	ContentHandler = require('./content'),
-	GalleryHandler = require('./gallery');
+    ContentHandler = require('./content'),
+    GalleryHandler = require('./gallery');
 
 module.exports = exports = function(app, db, io, s3) {
 
@@ -11,7 +11,7 @@ module.exports = exports = function(app, db, io, s3) {
     // The main page of the blog
     app.get('/', contentHandler.displayMainPage);
 
-	app.post('/upload', uploadHandler.upload);
-	app.post('/gif', uploadHandler.gif);
-	app.get('/gallery', galleryHandler.gallery);
+    app.post('/upload', uploadHandler.upload);
+    app.post('/gif', uploadHandler.gif);
+    app.get('/gallery', galleryHandler.gallery);
 }
