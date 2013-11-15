@@ -2,6 +2,7 @@ extends layout
 
 block content
   button.btn.btn-primary.btn-lg(data-toggle='modal', data-target='#cameraModal' onclick="init()") Capture
+  a.btn.btn-primary.btn-lg(href="/gallery" style="float:right;") Gallery
   include framepool
   include video
   include stage

@@ -1,7 +1,9 @@
-ul
-  -for gif in gifs
-    div.gallery_item
-      li
-        img(src='/uploads/' + gif.first_img, width='320', height='240', id=gif._id, onclick='play_pause_gif(this)', class='paused')
-        input(type='hidden', id=gif._id + 'origin', value=gif.first_img)
-        input(type='hidden', id=gif._id + 'gif', value=gif.filename)
+#gallery-container.well(style="margin-top:40px;text-align:center;")
+  ul
+    -for gif in gifs
+      div.gallery_item
+        li(onclick='play_pause_gif(this)')
+          img(src='/uploads/' + gif.first_img, width='320', height='240', id=gif._id, class='paused')
+          span.img-overlay
+          input(type='hidden', id=gif._id + 'origin', value=gif.first_img)
+          input(type='hidden', id=gif._id + 'gif', value=gif.filename)
