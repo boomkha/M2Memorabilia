@@ -9,7 +9,7 @@ var upload_dir = __dirname + '/../public/uploads/',
 
 var progress_counter = 0;
 
-function UploadHandler(db, io) {
+function UploadHandler(db, io, s3) {
     'use strict';
 
     var gifDAO = new GifsDAO(db);
@@ -75,7 +75,7 @@ function UploadHandler(db, io) {
                 }
             }
             else {
-                progress_counter += 25;
+                progress_counter += 15;
             }
 
             console.log('GIF is generated');
@@ -87,7 +87,7 @@ function UploadHandler(db, io) {
             im.convert([gif_path, '-layers', 'OptimizeTransparency', '+map', gif_path],
             function(err, stdout){
                 if (err) throw err;
-                else progress_counter += 25;
+                else progress_counter += 15;
 
                 console.log('Transparency is optimized');
 
@@ -99,7 +99,7 @@ function UploadHandler(db, io) {
                 im.convert(['-size', '640x320', gif_path, '-resize', '320x240', gif_path],
                 function(err, stdout){
                     if (err) throw err;
-                    else progress_counter += 25;
+                    else progress_counter += 15;
 
                     console.log('Gif is resized');
 
@@ -107,29 +107,53 @@ function UploadHandler(db, io) {
 
                     io.sockets.emit('progress-action', { progress: progress_counter });
 
-                    var gif = {
-                        'filename': gif_filename,
-                        'path': gif_path,
-                        'timestamp': gif_timestamp
-                    }
+                    var gif_bucket = 'm2memorabilia';
 
-                    gifDAO.insertEntry(gif, function(err, result) {
-                        'use strict';
+                    var buff = fs.readFileSync(gif_path, 'base64');
 
+                    fs.readFile(gif_path, function(err, gifdata) {
                         if (err) throw err;
+                        else progress_counter += 15;
+
+                        console.log('Preparing the upload.');
+
+                        var gif_key = 'gifs/' + gif_filename;
+
+                        var s3_params = {ACL: "public-read", Bucket: gif_bucket, ContentType: "image/gif", Key: gif_key, Body: gifdata};
+                        s3.putObject(s3_params, function (err, data) {
+                            if (err) throw err;
+                            else progress_counter += 10;
+
+                            console.log('Successfully uploaded package.');
+
+                            var aws_url = 'https://s3-eu-west-1.amazonaws.com/m2memorabilia/gifs/' + gif_filename;
+
+                            var gif = {
+                                'filename': gif_filename,
+                                'path': gif_path,
+                                'url': aws_url,
+                                'timestamp': gif_timestamp
+                            }
+
+                            gifDAO.insertEntry(gif, function(err, result) {
+                                'use strict';
+
+                                if (err) throw err;
+                            });
+
+                            //invalidating progress_counter
+                            progress_counter = 0;
+
+                            res.json({ gif : gif_filename, url: aws_url });
+                        });
                     });
-
-                    //invalidating progress_counter
-                    progress_counter = 0;
-
-                    res.json({ gif : gif_filename });
                 });
             });
 
             //Remove the tmp dir
             rimraf(upload_tmp, function(err){
                 if (err) throw new Error('ERROR!!!')
-                else progress_counter += 25;
+                else progress_counter += 15;
 
                 console.log('tmp dir is deleted');
 

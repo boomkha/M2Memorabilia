@@ -5,13 +5,15 @@
 
 var express = require('express'),
     routes = require('./routes'),
-    upload = require('./routes/upload'),
-    gallery = require('./routes/gallery'),
     MongoClient = require('mongodb').MongoClient,
     config = require('konphyg')(__dirname + '/config');
     mongodbConfig = config('mongodb');
     http = require('http'),
-    path = require('path');
+    path = require('path'),
+    AWS = require('aws-sdk');
+
+AWS.config.loadFromPath('./config/aws_config.json');
+var s3 = new AWS.S3();
 
 var app = express();
 
@@ -44,7 +46,7 @@ MongoClient.connect(mongoConnection, function(err, db) {
     }
 
     // Application routes
-    routes(app, db, io);
+    routes(app, db, io, s3);
 
     server.listen(app.get('port'), function(){
         console.log('Express server listening on port ' + app.get('port'));

@@ -137,6 +137,7 @@ function processGif(data) {
     });
 
     $('#stageArea').append('<img src="../gifs/' + data.gif + '" />' );
+    $('#gif-url').val(data.url);
     $('#stageModal').modal('show');
 }
 
@@ -174,10 +175,10 @@ socket.on('progress-action', function(data) {
   console.log(data);
   //update progress bar -- data.progress
   $('.progress-bar').css('width', data.progress + '%');
-  if (data.progress >= 75) {
+  if (data.progress >= 60) {
     $('.progress-msg').html('almost there..');
   }
-  else if (data.progress >= 50) {
+  else if (data.progress >= 45) {
     $('.progress-msg').html('halfway there..');
   }
 });

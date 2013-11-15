@@ -23,4 +23,10 @@ config/*.development.json
 # Ignore uploaded files.
 public/gifs/*.gif
 
+# Ignore development config files.
+config/*.development.json
+
+# Ignore aws config file.
+config/aws_config.json
+
 .DS_Store
