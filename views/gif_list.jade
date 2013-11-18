@@ -1,4 +1,4 @@
-#gallery-container.well(style="margin-top:40px;text-align:center;")
+#gallery-container(style='margin-top:40px;text-align:center;')
   ul
     -for gif in gifs
       div.gallery_item
@@ -7,3 +7,12 @@
           span.img-overlay
           input(type='hidden', id=gif._id + 'origin', value=gif.first_img)
           input(type='hidden', id=gif._id + 'gif', value=gif.filename)
+        div.panel-group(id='accordion' + gif._id)
+          div.panel.panel-default
+            div.panel-heading
+              h4.panel-title
+                a(data-toggle='collapse', data-parent='#accordion' + gif._id, href='#collapse' + gif._id) Share this .gif
+            div.panel-collapse.collapse(id='collapse' + gif._id)
+              div.panel-body
+                img(src=gif.qr)
+                input.form-control(type='text', readonly, value=gif.url)

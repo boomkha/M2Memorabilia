@@ -40,6 +40,7 @@ MongoClient.connect(mongoConnection, function(err, db) {
     app.use(express.static(path.join(__dirname, 'public')));
     app.use('/uploads', express.static(__dirname + '/public/uploads'));
     app.use('/qrs', express.static(__dirname + '/public/qrs'));
+    app.use('/gifs', express.static(__dirname + '/public/gifs'));
 
     // development only
     if ('development' == app.get('env')) {

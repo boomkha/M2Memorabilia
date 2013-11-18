@@ -138,14 +138,18 @@ function UploadHandler(db, io, s3) {
 
                             var gif = {
                                 'filename': gif_filename,
-                                'path': gif_path,
+                                'path': '/qrs' + gif_filename,
                                 'url': aws_url,
-                                'qr': qr_path,
+                                'qr': '/qrs/' + qr_img,
                                 'first_img': first_img,
                                 'timestamp': gif_timestamp
                             }
 
                             encoder.on('end', function(){
+                                //invalidating progress_counter
+                                progress_counter = 0;
+
+                                res.json({ gif : gif_filename, url: aws_url , qr: qr_img});
                                 console.log('QR image generated');
                             });
                             encoder.encode(aws_url, qr_path);
@@ -155,11 +159,6 @@ function UploadHandler(db, io, s3) {
 
                                 if (err) throw err;
                             });
-
-                            //invalidating progress_counter
-                            progress_counter = 0;
-
-                            res.json({ gif : gif_filename, url: aws_url , qr: qr_img});
                         });
                     });
                 });
