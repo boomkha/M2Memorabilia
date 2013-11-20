@@ -4,8 +4,9 @@ div#progressbar.progress.progress-striped.active(style='display:none; width: 600
 .row.row-offcanvas.row-offcanvas-right
   #sidebar.col-xs-12(role='navigation' style="margin-top:30px;")
     form#framepool-form(class='form-inline', role='form' style='margin-bottom: 10px;' onsubmit="return false;")
-      button.btn.btn-default(onclick="generate()" style="width: 78%; margin-right: 1.5%;") Generate
+      button.btn.btn-default(onclick="generate()" style="width: 68%; margin-right: 1.5%;") Generate
       button.btn.btn-default(onclick="selectAll()" style="width: 10%; margin-right: 0.5%;") Select all
-      button.btn.btn-default(onclick="selectNone()" style="width: 10%;") Select none
+      button.btn.btn-default(onclick="selectNone()" style="width: 10%; margin-right: 0.5%;") Select none
+      button.btn.btn-default(onclick="clearFramePool()" style="width: 8%; margin-right: 1.5%;") Clear
     #gallery-container.well.sidebar-nav
       #gallery

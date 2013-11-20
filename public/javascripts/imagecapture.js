@@ -115,6 +115,10 @@ function selectNone() {
   console.log(frames);
 }
 
+function clearFramePool() {
+  $('#gallery').html('');
+}
+
 function createThumbnail(data)
 {
     var img = document.createElement('img');
