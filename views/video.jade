@@ -5,5 +5,10 @@ div#cameraModal.modal(tabindex="-1", role="dialog", aria-labelledby="cameraModal
         video(id="monitor" autoplay="true")
         canvas(id="photo" width="640" height="480px" style="display:none;")
         form#cameraModalForm(class='form-inline', role='form' style='margin-top: 10px;' onsubmit="return false;")
-          button#captureButton.btn.btn-default(onclick="init(this)" style="width: 49%; margin-right: 2%;") Take Snapshot
-          button#closeVideoModalButton.btn.btn-default(data-dismiss="modal" style="width: 49%;") Close
+          button#captureButton.btn.btn-default(onclick="takeSnapshots($('input#nr_images').val());" style="width: 49%; margin-right: 2%;") Take Snapshot
+          button#controlsButton.btn.btn-default(onclick="$('#controls-container').toggle();" style="width: 24%; margin-right: 1%;") Options
+          button#closeVideoModalButton.btn.btn-default(data-dismiss="modal" style="width: 24%;") Close
+          div#controls-container(style='display:none;')
+            span take
+            input#nr_images(type='number' name='nr-images' min='1' max='10')
+            span snapshots

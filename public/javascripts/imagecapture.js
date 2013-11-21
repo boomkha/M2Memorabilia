@@ -63,6 +63,30 @@ function noStream(e) {
   document.getElementById('errorMessage').textContent = msg;
 }
 
+function setIntervalX(callback, delay, repetitions) {
+  var x = 1;
+  var intervalID = window.setInterval(function () {
+     callback();
+
+     if (x++ >= repetitions) {
+         window.clearInterval(intervalID);
+     }
+  }, delay);
+}
+
+function takeSnapshots(nr_images)
+{
+  if (nr_images <= 1) {
+    capture();
+  }
+  else if (nr_images > 10) {
+    setIntervalX(capture, 1500, 10);
+  }
+  else {
+    setIntervalX(capture, 1500, nr_images);
+  }
+}
+
 function capture() {
     ctx.drawImage(video, 0, 0);
     var img = document.createElement('img');
@@ -169,7 +193,7 @@ function init() {
     return;
   }
   el = document.getElementById('captureButton');
-  el.onclick = capture;
+  // el.onclick = takeSnapshots;
   el.textContent = 'Take snapshot';
   navigator.getMedia({video: true}, gotStream, noStream);
 }
