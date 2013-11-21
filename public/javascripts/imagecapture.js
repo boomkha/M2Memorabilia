@@ -126,11 +126,11 @@ function createThumbnail(data)
     img.id  = data.thumbnail;
     img.addEventListener("click", toggleSelect, false);
     gallery.insertBefore(img, gallery.firstChild);
-    if ($(gallery).height() >= $('#gallery-container').height()) {
-      $("#gallery-container").slimScroll({
-        height: $('#gallery-container').height()
-      });
-    }
+    // if ($(gallery).height() >= $('#gallery-container').height()) {
+    //   $("#gallery-container").slimScroll({
+    //     height: $('#gallery-container').height()
+    //   });
+    // }
 }
 
 function processGif(data) {
